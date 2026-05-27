@@ -23,7 +23,7 @@ from src.ingestion.d002.embed_store import embed_from_html, load_html_documents 
 from src.ingestion.d002.embed_store import extract_text_from_html
 from src.ingestion.d003.loader import load_documents as d003_load_documents
 from src.ingestion.d003.splitter import split_documents as d003_split_documents
-from src.ingestion.d003.embedder import get_upstage_embeddings
+from src.ingestion.d003.embedder import get_openai_embeddings
 from src.ingestion.d003.vectorstore import persist_to_chroma as d003_persist_to_chroma
 from src.ingestion.d004.batch_processor import process_pdf_directory as d004_process_pdf_directory
 from src.ingestion.d004.vectorstore_manager import VectorStoreManager as d004_VectorStoreManager
@@ -167,7 +167,7 @@ def ingest(
         print(f"{'='*60}\n")
         
         # 통합 벡터 DB에 저장
-        embeddings = get_upstage_embeddings()
+        embeddings = get_openai_embeddings()
         db_path = persist_dir or os.getenv("CHROMA_DB_DIR", "./chroma_storage")
         collection_name = os.getenv("COLLECTION_NAME", "unified_rag_collection")
         
@@ -264,7 +264,7 @@ def ingest(
         print(f"[d003] Created {len(chunks)} chunks.")
 
         print("[d003] Initializing embeddings ...")
-        embeddings = get_upstage_embeddings()
+        embeddings = get_openai_embeddings()
 
         print("[d003] Persisting to Chroma ...")
         start_time = time.perf_counter()

@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Dict
 
 from langchain_chroma import Chroma
-from langchain_upstage import ChatUpstage, UpstageEmbeddings
+from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -49,15 +49,15 @@ def load_document_links(domain: str = "d002") -> Dict[str, str]:
 
 
 def load_vector_db(domain: str = "d002") -> Chroma:
-    """도메인별 Chroma VectorDB 로드 (Upstage 임베딩 일관화)."""
+    """도메인별 Chroma VectorDB 로드 (OpenAI 임베딩 일관화)."""
     persist_dir = f"data/{domain}/vector_store"
 
-    api_key = os.getenv("UPSTAGE_API_KEY")
+    api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
-        raise ValueError("UPSTAGE_API_KEY 환경변수가 필요합니다")
+        raise ValueError("OPENAI_API_KEY 환경변수가 필요합니다")
 
-    embedding_model = os.getenv("UPSTAGE_EMBEDDING_MODEL", "embedding-query")
-    embeddings = UpstageEmbeddings(api_key=api_key, model=embedding_model)
+    embedding_model = os.getenv("OPENAI_EMBEDDING_MODEL", "text-embedding-3-small")
+    embeddings = OpenAIEmbeddings(api_key=api_key, model=embedding_model)
 
     return Chroma(
         persist_directory=persist_dir,
@@ -66,13 +66,13 @@ def load_vector_db(domain: str = "d002") -> Chroma:
     )
 
 
-def load_llm() -> ChatUpstage:
-    """Upstage LLM 로드."""
-    api_key = os.getenv("UPSTAGE_API_KEY")
+def load_llm() -> ChatOpenAI:
+    """OpenAI LLM 로드."""
+    api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
-        raise ValueError("UPSTAGE_API_KEY 환경변수가 필요합니다")
+        raise ValueError("OPENAI_API_KEY 환경변수가 필요합니다")
 
-    model = os.getenv("UPSTAGE_CHAT_MODEL", "solar-1-mini-chat")
+    model = os.getenv("OPENAI_CHAT_MODEL", "gpt-4o-mini")
 
-    return ChatUpstage(api_key=api_key, model=model)
+    return ChatOpenAI(api_key=api_key, model=model)
 

@@ -6,7 +6,7 @@ import time
 from pathlib import Path
 from dotenv import load_dotenv
 from typing import Dict, List
-from langchain_upstage import ChatUpstage, UpstageEmbeddings
+from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langchain_chroma import Chroma
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
@@ -35,8 +35,8 @@ class AdvancedRAGChain:
     ):
         load_dotenv()
 
-        self.api_key = api_key or os.getenv("UPSTAGE_API_KEY")
-        self.model = model or os.getenv("UPSTAGE_CHAT_MODEL", "solar-1-mini-chat")
+        self.api_key = api_key or os.getenv("OPENAI_API_KEY")
+        self.model = model or os.getenv("OPENAI_CHAT_MODEL", "gpt-4o-mini")
         self.db_path = db_path or os.getenv("CHROMA_DB_DIR", "./chroma_storage")
         self.collection_name = os.getenv("COLLECTION_NAME", "pdf_promotion_chunks")
         self.max_rewrite_attempts = max_rewrite_attempts
@@ -53,7 +53,7 @@ class AdvancedRAGChain:
         )
 
         # LLM 초기화
-        self.llm = ChatUpstage(api_key=self.api_key, model=self.model)
+        self.llm = ChatOpenAI(api_key=self.api_key, model=self.model)
 
         # 답변 생성 프롬프트
         self.answer_prompt = ChatPromptTemplate.from_messages(

@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 from langchain_chroma import Chroma
-from langchain_upstage import UpstageEmbeddings
+from langchain_openai import OpenAIEmbeddings
 from langchain_core.vectorstores import VectorStoreRetriever
 from typing import List
 
@@ -14,10 +14,10 @@ def load_retriever(
 ) -> VectorStoreRetriever:
 
     load_dotenv()
-    api_key = os.getenv("UPSTAGE_API_KEY")
-    model = os.getenv("UPSTAGE_EMBEDDING_MODEL", "solar-embedding-1-large")
+    api_key = os.getenv("OPENAI_API_KEY")
+    model = os.getenv("OPENAI_EMBEDDING_MODEL", "text-embedding-3-small")
 
-    embeddings = UpstageEmbeddings(api_key=api_key, model=model)
+    embeddings = OpenAIEmbeddings(api_key=api_key, model=model)
 
     vectorstore = Chroma(
         persist_directory=db_path,

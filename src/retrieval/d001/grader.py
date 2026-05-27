@@ -9,7 +9,7 @@ from typing import List, Literal, Tuple
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.pydantic_v1 import BaseModel, Field
-from langchain_upstage import ChatUpstage
+from langchain_openai import ChatOpenAI
 
 from src.utils.d001.config import settings
 from src.utils.d001.logger import get_logger
@@ -41,8 +41,8 @@ class DocumentGrader:
                                  이 값 이상이면 relevant로 판단.
         """
         self.relevance_threshold = relevance_threshold
-        self.llm = ChatUpstage(
-            model=settings.UPSTAGE_CHAT_MODEL,
+        self.llm = ChatOpenAI(
+            model=settings.OPENAI_CHAT_MODEL,
             temperature=0.0,  # 평가는 일관성 있게
         )
         self.grader_prompt = self._create_grader_prompt()

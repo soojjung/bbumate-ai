@@ -1,5 +1,5 @@
 from langchain_chroma import Chroma
-from langchain_upstage import UpstageEmbeddings
+from langchain_openai import OpenAIEmbeddings
 import os
 from langchain_core.documents import Document
 
@@ -18,16 +18,16 @@ class VectorStoreManager:
         batch_size=3,
     ):
 
-        api_key = api_key or os.getenv("UPSTAGE_API_KEY")
+        api_key = api_key or os.getenv("OPENAI_API_KEY")
         db_path = db_path or os.getenv("CHROMA_DB_DIR", "./chroma_storage")
         embedding_model = embedding_model or os.getenv(
-            "UPSTAGE_EMBEDDING_MODEL", "solar-embedding-1-large"
+            "OPENAI_EMBEDDING_MODEL", "text-embedding-3-small"
         )
         collection_name = collection_name or os.getenv(
             "COLLECTION_NAME", "pdf_promotion_chunks"
         )
 
-        embeddings = UpstageEmbeddings(api_key=api_key, model=embedding_model)
+        embeddings = OpenAIEmbeddings(api_key=api_key, model=embedding_model)
 
         # from_documents를 사용하여 벡터 저장소 생성 및 저장
         vectorstore = Chroma.from_documents(

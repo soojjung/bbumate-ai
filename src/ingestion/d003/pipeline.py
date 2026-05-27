@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 
 from .loader import load_documents
 from .splitter import split_documents
-from .embedder import get_upstage_embeddings
+from .embedder import get_openai_embeddings
 from .vectorstore import persist_to_chroma
 
 
@@ -58,7 +58,7 @@ def main() -> None:
     print(f"[INFO] Created {len(chunks)} chunks.")
 
     print("[3/4] Initializing embeddings ...")
-    embeddings = get_upstage_embeddings()
+    embeddings = get_openai_embeddings()
 
     print("[4/4] Persisting to Chroma ...")
     start_time = time.perf_counter()

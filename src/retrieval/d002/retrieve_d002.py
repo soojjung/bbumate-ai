@@ -5,7 +5,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 from langchain_chroma import Chroma
-from langchain_upstage import UpstageEmbeddings
+from langchain_openai import OpenAIEmbeddings
 
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
@@ -20,12 +20,12 @@ def load_vector_db(domain: str) -> Chroma:
     if not base_dir.exists():
         raise FileNotFoundError(f"벡터 스토어가 없습니다: {base_dir}")
 
-    api_key = os.getenv("UPSTAGE_API_KEY")
+    api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
-        raise ValueError("UPSTAGE_API_KEY 환경변수가 필요합니다")
+        raise ValueError("OPENAI_API_KEY 환경변수가 필요합니다")
 
-    embedding_model = os.getenv("UPSTAGE_EMBEDDING_MODEL", "embedding-query")
-    embeddings = UpstageEmbeddings(api_key=api_key, model=embedding_model)
+    embedding_model = os.getenv("OPENAI_EMBEDDING_MODEL", "text-embedding-3-small")
+    embeddings = OpenAIEmbeddings(api_key=api_key, model=embedding_model)
 
     vectordb = Chroma(
         persist_directory=str(base_dir),

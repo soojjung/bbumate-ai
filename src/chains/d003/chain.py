@@ -7,26 +7,26 @@ from dotenv import load_dotenv
 from langchain_core.documents import Document
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
-from langchain_upstage import ChatUpstage
+from langchain_openai import ChatOpenAI
 
 from src.retrieval.d003.retriever import get_retriever
 from src.generation.d003.prompting import build_chat_prompt, format_docs_for_context
 
 
-def build_llm() -> ChatUpstage:
+def build_llm() -> ChatOpenAI:
     """
-    Initialize Upstage Chat model from environment variables.
+    Initialize OpenAI Chat model from environment variables.
     """
     load_dotenv()
-    api_key = os.getenv("UPSTAGE_API_KEY")
-    model_name = os.getenv("UPSTAGE_CHAT_MODEL")
+    api_key = os.getenv("OPENAI_API_KEY")
+    model_name = os.getenv("OPENAI_CHAT_MODEL")
 
     if not api_key:
-        raise ValueError("UPSTAGE_API_KEY is not set in environment")
+        raise ValueError("OPENAI_API_KEY is not set in environment")
     if not model_name:
-        raise ValueError("UPSTAGE_CHAT_MODEL is not set in environment")
+        raise ValueError("OPENAI_CHAT_MODEL is not set in environment")
 
-    return ChatUpstage(api_key=api_key, model=model_name)
+    return ChatOpenAI(api_key=api_key, model=model_name)
 
 
 def build_chain(k: int = 3):

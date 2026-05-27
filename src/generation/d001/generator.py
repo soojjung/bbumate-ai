@@ -8,7 +8,7 @@ from typing import List
 from langchain_core.documents import Document
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_upstage import ChatUpstage
+from langchain_openai import ChatOpenAI
 
 from src.utils.d001.config import settings
 from src.utils.d001.exceptions import ConfigurationError, GenerationError
@@ -18,8 +18,8 @@ from src.utils.d001.logger import get_logger
 logger = get_logger(__name__)
 
 
-def get_llm_model() -> ChatUpstage:
-    """Upstage LLM 객체를 생성하여 반환합니다.
+def get_llm_model() -> ChatOpenAI:
+    """OpenAI LLM 객체를 생성하여 반환합니다.
 
     환경 변수에서 API 키와 모델 이름을 자동으로 로드합니다.
 
@@ -29,16 +29,15 @@ def get_llm_model() -> ChatUpstage:
     Raises:
         ConfigurationError: API 키가 설정되지 않은 경우.
     """
-    if not settings.UPSTAGE_API_KEY:
+    if not settings.OPENAI_API_KEY:
         raise ConfigurationError(
-            "UPSTAGE_API_KEY가 설정되지 않았습니다. .env 파일을 확인하세요."
+            "OPENAI_API_KEY가 설정되지 않았습니다. .env 파일을 확인하세요."
         )
 
-    logger.info("Upstage LLM 모델 '%s' 초기화", settings.UPSTAGE_CHAT_MODEL)
+    logger.info("OpenAI LLM 모델 '%s' 초기화", settings.OPENAI_CHAT_MODEL)
 
-    # ChatUpstage는 UPSTAGE_API_KEY 환경 변수를 자동으로 사용
-    return ChatUpstage(
-        model=settings.UPSTAGE_CHAT_MODEL, temperature=settings.LLM_TEMPERATURE
+    return ChatOpenAI(
+        model=settings.OPENAI_CHAT_MODEL, temperature=settings.LLM_TEMPERATURE
     )
 
 

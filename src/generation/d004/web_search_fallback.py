@@ -1,4 +1,4 @@
-from langchain_upstage import ChatUpstage
+from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 import os
@@ -14,10 +14,10 @@ class WebSearchFallback:
         model: str = None,
         search_api_key: str = None,
     ):
-        self.api_key = api_key or os.getenv("UPSTAGE_API_KEY")
-        self.model = model or os.getenv("UPSTAGE_CHAT_MODEL", "solar-1-mini-chat")
+        self.api_key = api_key or os.getenv("OPENAI_API_KEY")
+        self.model = model or os.getenv("OPENAI_CHAT_MODEL", "gpt-4o-mini")
         self.search_api_key = search_api_key or os.getenv("SEARCH_API_KEY")
-        self.llm = ChatUpstage(api_key=self.api_key, model=self.model)
+        self.llm = ChatOpenAI(api_key=self.api_key, model=self.model)
 
         # 웹 검색 결과를 답변으로 변환
         self.answer_prompt = ChatPromptTemplate.from_messages(

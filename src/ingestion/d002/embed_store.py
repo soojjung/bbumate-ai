@@ -9,7 +9,7 @@ from tqdm import tqdm
 
 from langchain.docstore.document import Document
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_upstage import UpstageEmbeddings
+from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import Chroma
 
 
@@ -143,19 +143,18 @@ def embed_from_html(
     total_chars = sum(len(doc.page_content) for doc in splits)
     logger.info(f"총 {total_chars:,}자 임베딩 예정 (약 {len(splits)}회 API 호출)")
 
-    # Upstage 임베딩 초기화
-    api_key = os.getenv("UPSTAGE_API_KEY")
+    # OpenAI 임베딩 초기화
+    api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
-        raise ValueError("환경변수 UPSTAGE_API_KEY가 없습니다 (.env 확인).")
+        raise ValueError("환경변수 OPENAI_API_KEY가 없습니다 (.env 확인).")
 
     try:
-        # 임베딩 모델은 환경변수로 교체 가능. 기본값은 Upstage 표준 임베딩 모델.
-        embedding_model = os.getenv("UPSTAGE_EMBEDDING_MODEL", "embedding-query")
-        embeddings = UpstageEmbeddings(api_key=api_key, model=embedding_model)
+        embedding_model = os.getenv("OPENAI_EMBEDDING_MODEL", "text-embedding-3-small")
+        embeddings = OpenAIEmbeddings(api_key=api_key, model=embedding_model)
         logger.info(f"임베딩 모델: {embedding_model}")
 
     except Exception as e:
-        raise ValueError(f"Upstage 임베딩 초기화 실패: {e}")
+        raise ValueError(f"OpenAI 임베딩 초기화 실패: {e}")
 
     # Chroma VectorDB 저장
     persist_dir.mkdir(parents=True, exist_ok=True)

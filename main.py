@@ -7,10 +7,10 @@ from pydantic import BaseModel, Field, field_validator
 
 # 환경변수 불러오기
 load_dotenv()
-UPSTAGE_API_KEY = os.getenv("UPSTAGE_API_KEY")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
-if not UPSTAGE_API_KEY:
-    raise ValueError("Please set UPSTAGE_API_KEY in your .env file")
+if not OPENAI_API_KEY:
+    raise ValueError("Please set OPENAI_API_KEY in your .env file")
 
 # FastAPI 앱 인스턴스 생성
 app = FastAPI(title="RAG API - 신혼부부 지원정책 상담")

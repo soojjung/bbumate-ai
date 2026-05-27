@@ -34,7 +34,7 @@ class EmbeddingError(RAGException):
     임베딩 모델 로드 실패나 임베딩 벡터 생성 오류 시 사용됩니다.
 
     Examples:
-        - Upstage 임베딩 모델 초기화 실패
+        - OpenAI 임베딩 모델 초기화 실패
         - 임베딩 API 호출 오류
         - 벡터 생성 타임아웃
     """
@@ -76,7 +76,7 @@ class GenerationError(RAGException):
     LLM 호출 실패, 응답 파싱 오류 등 답변 생성 과정에서 발생하는 문제에 사용됩니다.
 
     Examples:
-        - Upstage API 호출 실패
+        - OpenAI API 호출 실패
         - LLM 응답 타임아웃
         - 응답 형식 파싱 오류
     """

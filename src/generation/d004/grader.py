@@ -1,4 +1,4 @@
-from langchain_upstage import ChatUpstage
+from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from typing import List
@@ -9,9 +9,9 @@ import os
 # 검색된 문서의 관련성을 평가
 class DocumentGrader:
     def __init__(self, api_key: str = None, model: str = None):
-        self.api_key = api_key or os.getenv("UPSTAGE_API_KEY")
-        self.model = model or os.getenv("UPSTAGE_CHAT_MODEL", "solar-1-mini-chat")
-        self.llm = ChatUpstage(api_key=self.api_key, model=self.model)
+        self.api_key = api_key or os.getenv("OPENAI_API_KEY")
+        self.model = model or os.getenv("OPENAI_CHAT_MODEL", "gpt-4o-mini")
+        self.llm = ChatOpenAI(api_key=self.api_key, model=self.model)
 
         self.grading_prompt = ChatPromptTemplate.from_messages(
             [

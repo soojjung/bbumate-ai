@@ -39,9 +39,9 @@ jobs:
         run: |
           IMAGE_NAME="${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}/${{ env.SERVICE_NAME }}:${{ github.sha }}"
           docker build \
-            --build-arg UPSTAGE_API_KEY="${{ secrets.UPSTAGE_API_KEY }}" \
-            --build-arg UPSTAGE_EMBEDDING_MODEL="${{ vars.UPSTAGE_EMBEDDING_MODEL }}" \
-            --build-arg UPSTAGE_CHAT_MODEL="${{ vars.UPSTAGE_CHAT_MODEL }}" \
+            --build-arg OPENAI_API_KEY="${{ secrets.OPENAI_API_KEY }}" \
+            --build-arg OPENAI_EMBEDDING_MODEL="${{ vars.OPENAI_EMBEDDING_MODEL }}" \
+            --build-arg OPENAI_CHAT_MODEL="${{ vars.OPENAI_CHAT_MODEL }}" \
             -t $IMAGE_NAME .
           docker push $IMAGE_NAME
           echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV
@@ -58,9 +58,9 @@ jobs:
             --timeout 300 \
             --max-instances 10 \
             --min-instances 0 \
-            --set-env-vars "UPSTAGE_API_KEY=${{ secrets.UPSTAGE_API_KEY }}" \
-            --set-env-vars "UPSTAGE_EMBEDDING_MODEL=${{ vars.UPSTAGE_EMBEDDING_MODEL }}" \
-            --set-env-vars "UPSTAGE_CHAT_MODEL=${{ vars.UPSTAGE_CHAT_MODEL }}" \
+            --set-env-vars "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" \
+            --set-env-vars "OPENAI_EMBEDDING_MODEL=${{ vars.OPENAI_EMBEDDING_MODEL }}" \
+            --set-env-vars "OPENAI_CHAT_MODEL=${{ vars.OPENAI_CHAT_MODEL }}" \
             --set-env-vars "CHROMA_DB_DIR=./chroma_storage" \
             --set-env-vars "USE_ADAPTIVE_RAG=true" \
             --set-env-vars "RELEVANCE_THRESHOLD=0.6" \

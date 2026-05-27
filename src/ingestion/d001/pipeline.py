@@ -1,4 +1,4 @@
-"""PDF 문서를 로드하고 Upstage 임베딩을 사용하여 Chroma DB에 저장하는 데이터 수집 파이프라인."""
+"""PDF 문서를 로드하고 OpenAI 임베딩을 사용하여 Chroma DB에 저장하는 데이터 수집 파이프라인."""
 
 import time
 from pathlib import Path

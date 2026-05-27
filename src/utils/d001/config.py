@@ -20,12 +20,12 @@ class Settings:
     # 환경 설정
     ENVIRONMENT: str = os.getenv("ENVIRONMENT", "development")
 
-    # Upstage API 설정
-    UPSTAGE_API_KEY: Optional[str] = os.getenv("UPSTAGE_API_KEY")
-    UPSTAGE_EMBEDDING_MODEL: str = os.getenv(
-        "UPSTAGE_EMBEDDING_MODEL", "solar-embedding-1-large"
+    # OpenAI API 설정
+    OPENAI_API_KEY: Optional[str] = os.getenv("OPENAI_API_KEY")
+    OPENAI_EMBEDDING_MODEL: str = os.getenv(
+        "OPENAI_EMBEDDING_MODEL", "text-embedding-3-small"
     )
-    UPSTAGE_CHAT_MODEL: str = os.getenv("UPSTAGE_CHAT_MODEL", "solar-1-mini-chat")
+    OPENAI_CHAT_MODEL: str = os.getenv("OPENAI_CHAT_MODEL", "gpt-4o-mini")
 
     # Vector DB 설정
     CHROMA_DB_DIR: str = os.getenv("CHROMA_DB_DIR", "./chroma_storage")
@@ -94,14 +94,14 @@ class Settings:
         """
         errors: List[str] = []
 
-        if not cls.UPSTAGE_API_KEY:
-            errors.append("UPSTAGE_API_KEY가 설정되지 않았습니다.")
+        if not cls.OPENAI_API_KEY:
+            errors.append("OPENAI_API_KEY가 설정되지 않았습니다.")
 
-        if not cls.UPSTAGE_EMBEDDING_MODEL:
-            errors.append("UPSTAGE_EMBEDDING_MODEL이 설정되지 않았습니다.")
+        if not cls.OPENAI_EMBEDDING_MODEL:
+            errors.append("OPENAI_EMBEDDING_MODEL이 설정되지 않았습니다.")
 
-        if not cls.UPSTAGE_CHAT_MODEL:
-            errors.append("UPSTAGE_CHAT_MODEL이 설정되지 않았습니다.")
+        if not cls.OPENAI_CHAT_MODEL:
+            errors.append("OPENAI_CHAT_MODEL이 설정되지 않았습니다.")
 
         if cls.DEFAULT_RETRIEVAL_K < 1:
             errors.append("DEFAULT_RETRIEVAL_K는 1 이상이어야 합니다.")

@@ -7,17 +7,17 @@ from dotenv import load_dotenv
 from langchain_core.documents import Document
 from langchain_community.vectorstores import Chroma
 
-from src.ingestion.d003.embedder import get_upstage_embeddings
+from src.ingestion.d003.embedder import get_openai_embeddings
 
 
 def get_retriever(k: int = 3):
     """
-    Open a persisted Chroma index with Upstage embeddings and return a retriever.
+    Open a persisted Chroma index with OpenAI embeddings and return a retriever.
     """
     load_dotenv()
     persist_dir = os.getenv("CHROMA_DB_DIR", "./chroma_storage")
 
-    embeddings = get_upstage_embeddings()
+    embeddings = get_openai_embeddings()
     vectorstore = Chroma(persist_directory=persist_dir, embedding_function=embeddings)
     return vectorstore.as_retriever(search_kwargs={"k": k})
 

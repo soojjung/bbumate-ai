@@ -18,7 +18,7 @@ PREVIEW_LENGTH = 300
 
 
 def store_in_chroma(chunks: List[Document]) -> Optional[Chroma]:
-    """청크를 Upstage 임베딩을 사용하여 Chroma DB에 저장합니다.
+    """청크를 OpenAI 임베딩을 사용하여 Chroma DB에 저장합니다.
 
     기존 DB는 삭제됩니다.
 
@@ -28,7 +28,7 @@ def store_in_chroma(chunks: List[Document]) -> Optional[Chroma]:
     Returns:
         생성된 Chroma 벡터스토어 객체. 실패 시 None 반환.
     """
-    print("\n청크를 Upstage 임베딩을 사용하여 Chroma DB에 저장합니다...")
+    print("\n청크를 OpenAI 임베딩을 사용하여 Chroma DB에 저장합니다...")
 
     try:
         # 임베딩 객체 생성
@@ -39,7 +39,7 @@ def store_in_chroma(chunks: List[Document]) -> Optional[Chroma]:
         return None
     except Exception as e:  # pylint: disable=broad-except
         # 다양한 임베딩 초기화 오류를 처리하기 위한 포괄적 예외 처리
-        print(f"Error: UpstageEmbeddings 초기화 중 오류: {e}")
+        print(f"Error: OpenAIEmbeddings 초기화 중 오류: {e}")
         return None
 
     # 환경 변수에서 Chroma DB 저장 경로 로드 (기본값 설정)

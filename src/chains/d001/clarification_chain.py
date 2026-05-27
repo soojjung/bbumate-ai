@@ -16,7 +16,7 @@ from uuid import uuid4
 
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_upstage import ChatUpstage
+from langchain_openai import ChatOpenAI
 
 from src.utils.d001.config import settings
 from src.utils.d001.logger import get_logger
@@ -88,8 +88,8 @@ class ClarificationChain:
                                  이 값 이상이면 명확화 필요.
         """
         self.ambiguity_threshold = ambiguity_threshold
-        self.llm = ChatUpstage(
-            model=settings.UPSTAGE_CHAT_MODEL,
+        self.llm = ChatOpenAI(
+            model=settings.OPENAI_CHAT_MODEL,
             temperature=0.0,
         )
         self.analysis_prompt = self._create_analysis_prompt()

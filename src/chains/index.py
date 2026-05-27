@@ -9,7 +9,7 @@ from typing import Optional, Dict, Any
 from dotenv import load_dotenv
 
 from langchain_chroma import Chroma
-from langchain_upstage import ChatUpstage, UpstageEmbeddings
+from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 
 # d002의 함수들을 import해서 사용
 from src.chains.d002.rag_chain import run_rag, _format_docs
@@ -23,12 +23,12 @@ def load_unified_vector_db() -> Chroma:
     db_path = os.getenv("CHROMA_DB_DIR", "./chroma_storage")
     collection_name = os.getenv("COLLECTION_NAME", "unified_rag_collection")
 
-    api_key = os.getenv("UPSTAGE_API_KEY")
+    api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
-        raise ValueError("UPSTAGE_API_KEY 환경변수가 필요합니다")
+        raise ValueError("OPENAI_API_KEY 환경변수가 필요합니다")
 
-    embedding_model = os.getenv("UPSTAGE_EMBEDDING_MODEL", "solar-embedding-1-large")
-    embeddings = UpstageEmbeddings(api_key=api_key, model=embedding_model)
+    embedding_model = os.getenv("OPENAI_EMBEDDING_MODEL", "text-embedding-3-small")
+    embeddings = OpenAIEmbeddings(api_key=api_key, model=embedding_model)
 
     return Chroma(
         persist_directory=db_path,
@@ -37,8 +37,8 @@ def load_unified_vector_db() -> Chroma:
     )
 
 
-def build_llm() -> ChatUpstage:
-    """Upstage LLM 로드."""
+def build_llm() -> ChatOpenAI:
+    """OpenAI LLM 로드."""
     return load_llm()
 
 

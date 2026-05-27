@@ -16,7 +16,7 @@ def persist_to_chroma(
     load_dotenv()
     persist_dir = os.getenv("CHROMA_DB_DIR", "./chroma_storage")
     if not embedding_function:
-        raise ValueError("embedding_function is required (e.g., UpstageEmbeddings)")
+        raise ValueError("embedding_function is required (e.g., OpenAIEmbeddings)")
 
     vectorstore = Chroma.from_documents(
         documents=documents, embedding=embedding_function, persist_directory=persist_dir

@@ -19,14 +19,14 @@ RUN pip install --no-cache-dir --upgrade pip && \
 COPY . .
 
 # 빌드 시점에 Ingestion 실행을 위한 환경 변수 받기
-ARG UPSTAGE_API_KEY
-ARG UPSTAGE_EMBEDDING_MODEL=solar-embedding-1-large
-ARG UPSTAGE_CHAT_MODEL=solar-1-mini-chat
+ARG OPENAI_API_KEY
+ARG OPENAI_EMBEDDING_MODEL=text-embedding-3-small
+ARG OPENAI_CHAT_MODEL=gpt-4o-mini
 
 # Ingestion 실행 (빌드 시점에 ChromaDB 생성)
-RUN UPSTAGE_API_KEY=${UPSTAGE_API_KEY} \
-    UPSTAGE_EMBEDDING_MODEL=${UPSTAGE_EMBEDDING_MODEL} \
-    UPSTAGE_CHAT_MODEL=${UPSTAGE_CHAT_MODEL} \
+RUN OPENAI_API_KEY=${OPENAI_API_KEY} \
+    OPENAI_EMBEDDING_MODEL=${OPENAI_EMBEDDING_MODEL} \
+    OPENAI_CHAT_MODEL=${OPENAI_CHAT_MODEL} \
     python run_ingestion.py
 
 # 생성된 ChromaDB 확인
